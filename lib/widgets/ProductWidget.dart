@@ -1,7 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:laughmaru/main.dart';
+import 'package:laughmaru/FireBase.dart';
+import 'package:laughmaru/models/ProductsModel.dart';
 
-import '../OrderForm.dart';
+List<ProductModel> getProductList() {
+  List<ProductModel> productList = [];
+  Future<QuerySnapshot> buildProducts() {
+    return FirebaseFirestore.instance.collection('products').get();
+  }
+
+  FutureBuilder<QuerySnapshot>(
+    future: buildProducts(),
+    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      List<QueryDocumentSnapshot> datas = snapshot.data!.docs;
+      List.generate(
+          datas.length,
+          (index) => productList.add(ProductModel(datas[index].get('name'),
+              datas[index].get('info'), datas[index].get('price'))));
+      return Text('完了');
+    },
+  );
+  return productList;
+}
 
 class ProductWidget extends StatefulWidget {
   @override
@@ -11,7 +31,8 @@ class ProductWidget extends StatefulWidget {
 class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
-    List<String> productsList = [
+    List<ProductModel> productList = getProductList();
+    List<String> productsName = [
       'らふまるセット',
       '地元野菜セット',
       '府中農園セット',
@@ -29,13 +50,13 @@ class _ProductWidgetState extends State<ProductWidget> {
       crossAxisCount: 2,
       childAspectRatio: (1 / 2),
       children: List.generate(
-        productsList.length,
+        productsName.length,
         (index) {
           return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => OrderForm()),
+                MaterialPageRoute(builder: (context) => FireBase()),
               );
             },
             child: Padding(
@@ -46,7 +67,6 @@ class _ProductWidgetState extends State<ProductWidget> {
                   borderRadius: BorderRadius.circular(20.0),
                   color: productBoxColor,
                 ),
-
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -67,7 +87,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            productsList[index],
+                            productsName[index],
                             style: Theme.of(context).textTheme.headline5,
                           ),
                           Text(

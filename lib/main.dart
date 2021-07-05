@@ -1,9 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:laughmaru/FireBase.dart';
 import 'package:laughmaru/widgets/AppBarWidget.dart';
 import 'package:laughmaru/widgets/RecipeWidget.dart';
 import 'package:laughmaru/widgets/PurchaseWidget.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 // class ProductInfo extends StatelessWidget{
 //   @override
@@ -28,9 +35,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('products');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBarWidget("らふまる野菜"),
@@ -40,7 +53,6 @@ class Home extends StatelessWidget {
           children: [
             PurchaseButton(),
             RecipeWidget(),
-
           ],
         ),
       ),
