@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:laughmaru/FireBase.dart';
+import 'package:laughmaru/loginAndSignup/login_page.dart';
+import 'package:laughmaru/loginAndSignup/signup_page.dart';
 import 'package:laughmaru/widgets/AppBarWidget.dart';
 import 'package:laughmaru/widgets/RecipeWidget.dart';
 import 'package:laughmaru/widgets/PurchaseWidget.dart';
@@ -48,13 +50,7 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.white,
       appBar: AppBarWidget("らふまる野菜"),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            PurchaseButton(),
-            RecipeWidget(),
-          ],
-        ),
+        child: LogInPage(),
       ),
     );
   }

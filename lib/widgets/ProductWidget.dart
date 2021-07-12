@@ -5,26 +5,6 @@ import 'package:laughmaru/models/ProductListModel.dart';
 import 'package:laughmaru/models/ProductModel.dart';
 import 'package:provider/provider.dart';
 
-// List<ProductModel> getProductList() {
-//   List<ProductModel> productList = [];
-//   Future<QuerySnapshot> buildProducts() async {
-//     return await FirebaseFirestore.instance.collection('products').get();
-//   }
-//
-//   FutureBuilder<QuerySnapshot>(
-//     future: buildProducts(),
-//     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-//       List<QueryDocumentSnapshot> datas = snapshot.data!.docs;
-//       List.generate(
-//           datas.length,
-//           (index) => productList.add(ProductModel(datas[index].get('name'),
-//               datas[index].get('info'), datas[index].get('price'))));
-//       return Text('完了');
-//     },
-//   );
-//   return productList;
-// }
-
 class ProductWidget extends StatefulWidget {
   @override
   _ProductWidgetState createState() => _ProductWidgetState();
@@ -33,18 +13,6 @@ class ProductWidget extends StatefulWidget {
 class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
-    List<String> productsName = [
-      'らふまるセット',
-      '地元野菜セット',
-      '府中農園セット',
-    ];
-
-    final productsInfo = [
-      '水菜、スイスチャード、べカナ、ルッコラ、サラダホウレンソウ',
-      '地元で取れた季節の野菜です。',
-      'JGAP認証されている新鮮な野菜です。',
-    ];
-
     var productBoxColor;
 
     return ChangeNotifierProvider(
