@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:laughmaru/FireBase.dart';
 import 'package:laughmaru/loginAndSignup/login_page.dart';
 import 'package:laughmaru/loginAndSignup/signup_page.dart';
@@ -33,6 +34,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Welcome to Flutter',
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale("en"),
+          const Locale("ja"),
+        ],
         home: Home());
   }
 }

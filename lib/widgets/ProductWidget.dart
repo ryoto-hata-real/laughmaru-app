@@ -5,12 +5,27 @@ import 'package:laughmaru/models/ProductListModel.dart';
 import 'package:laughmaru/models/ProductModel.dart';
 import 'package:provider/provider.dart';
 
+import '../OrderForm.dart';
+
 class ProductWidget extends StatefulWidget {
   @override
   _ProductWidgetState createState() => _ProductWidgetState();
 }
 
 class _ProductWidgetState extends State<ProductWidget> {
+  int _defaultValue = 1;
+  // リストアイテム
+  List<int> _list = <int>[1, 2, 3, 4, 5];
+  int _num = 1;
+
+  // onChangedのイベントハンドラ定義
+  void _handleChange(int newValue) {
+    setState(() {
+      _num = newValue;
+      _defaultValue = newValue;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var productBoxColor;
@@ -29,7 +44,10 @@ class _ProductWidgetState extends State<ProductWidget> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => FireBase()),
+                    MaterialPageRoute(
+                        builder: (context) => OrderForm(
+                            products[index].productName,
+                            products[index].productPrice)),
                   );
                 },
                 child: Padding(
@@ -66,13 +84,35 @@ class _ProductWidgetState extends State<ProductWidget> {
                               Text(
                                 products[index].productInfo,
                               ),
-                              SizedBox(height: 20.0),
+                              SizedBox(height: 10.0),
                               Text(
-                                products[index].productPrice,
+                                '¥ ' + products[index].productPrice,
                                 style: TextStyle(
                                   fontSize: 20.0,
                                   color: Colors.indigo,
                                 ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    '個数：',
+                                    style: TextStyle(fontSize: 17),
+                                  ),
+                                  DropdownButton<int>(
+                                    value: _defaultValue,
+                                    onChanged: (num) => _handleChange(num!),
+                                    items: _list.map<DropdownMenuItem<int>>(
+                                        (int value) {
+                                      return DropdownMenuItem<int>(
+                                        value: value,
+                                        child: Text(
+                                          value.toString(),
+                                          style: TextStyle(fontSize: 17),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

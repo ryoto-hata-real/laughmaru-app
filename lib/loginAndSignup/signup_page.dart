@@ -21,14 +21,14 @@ class _SignUpPageState extends State<SignUpPage> {
     final _formKey = GlobalKey<FormState>();
     final passwordValidator = MultiValidator([
       RequiredValidator(errorText: 'password is required'),
-      MinLengthValidator(7,
-          errorText: 'password must be at least 8 digits long')
+      MinLengthValidator(7, errorText: 'パスワードは７文字以上にしてください。')
     ]);
     final nameController = TextEditingController();
     final mailController = TextEditingController();
     final addressController = TextEditingController();
     final telController = TextEditingController();
     final passwordController = TextEditingController();
+    bool _isEnable = false;
 
     return ChangeNotifierProvider(
       create: (_) => SignUpModel(),
@@ -71,7 +71,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                   ),
                   SizedBox(height: 20),
-                  TextField(
+                  TextFormField(
                     decoration: InputDecoration(hintText: 'メールアドレス'),
                     controller: mailController,
                     onChanged: (text) {
@@ -119,6 +119,21 @@ class _SignUpPageState extends State<SignUpPage> {
                         );
                       } catch (e) {
                         print('失敗');
+                        showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('会員登録失敗'),
+                                content: Text('会員登録に失敗しました。値を正しく入れてください。'),
+                                actions: <Widget>[
+                                  ElevatedButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            });
                       }
                     },
                   )
