@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/intl.dart';
+import 'package:laughmaru/models/userModel.dart';
 import 'package:laughmaru/widgets/AppBarWidget.dart';
 
 import 'TopPage.dart';
-import 'loginAndSignup/login_page.dart';
 
 class OrderForm extends StatefulWidget {
   String productName = '';
@@ -34,7 +33,7 @@ class _OrderFormState extends State<OrderForm> {
       context: context,
       locale: const Locale("ja"),
       initialDate: getLastSundayDataTime(),
-      firstDate: DateTime(2021),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2023),
       selectableDayPredicate: (DateTime date) =>
           date.weekday == 2 || date.weekday == 6 ? true : false,
@@ -126,6 +125,17 @@ class _OrderFormState extends State<OrderForm> {
     );
   }
 
+  UserModel user = UserModel()..getUserInformation();
+
+  String customerName = '';
+  String customerEmail = '';
+  String customerPostal = '';
+  String customerAddress = '';
+  String deliTime = '';
+  String other = '';
+
+//それぞれの項目の値をへんかん同時に変数に格納しておくことでデータを取得⇨メール送信ボタンを押したら、それらのデータをモデルに格納し、送信の関数にモデルを引数として渡すことでメールを送信する
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,6 +150,17 @@ class _OrderFormState extends State<OrderForm> {
                   'ご注文品：' + productName,
                   style: TextStyle(fontSize: 20),
                 ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 15),
+                      primary: Color.fromARGB(255, 0, 151, 255),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        user = user;
+                      });
+                    },
+                    child: const Text('自動入力')),
                 Row(
                   children: [
                     Text(
@@ -162,6 +183,9 @@ class _OrderFormState extends State<OrderForm> {
                   ],
                 ),
                 TextFormField(
+                  controller: TextEditingController(
+                    text: user.name,
+                  ),
                   decoration: InputDecoration(
                     hintText: 'お名前(例: 野菜　太郎)',
                     labelText: 'お名前',
@@ -170,6 +194,9 @@ class _OrderFormState extends State<OrderForm> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+                  controller: TextEditingController(
+                    text: user.email,
+                  ),
                   decoration: InputDecoration(
                     labelText: 'メールアドレス',
                   ),
@@ -198,6 +225,9 @@ class _OrderFormState extends State<OrderForm> {
                           ],
                         ),
                         TextFormField(
+                          controller: TextEditingController(
+                            text: user.address,
+                          ),
                           decoration: InputDecoration(
                             labelText: 'お届け先住所',
                           ),
@@ -269,7 +299,7 @@ class _OrderFormState extends State<OrderForm> {
                   ),
                   onPressed: () {
                     send();
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => TopPage()),
                     );

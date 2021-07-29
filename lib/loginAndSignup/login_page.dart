@@ -4,6 +4,7 @@ import 'package:laughmaru/TopPage.dart';
 import 'package:laughmaru/loginAndSignup/signupModel.dart';
 import 'package:laughmaru/loginAndSignup/signup_page.dart';
 import 'package:laughmaru/models/ProductListModel.dart';
+import 'package:laughmaru/models/userModel.dart';
 import 'package:laughmaru/widgets/AppBarWidget.dart';
 import 'package:laughmaru/widgets/ProductWidget.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +19,12 @@ class LogInPage extends StatefulWidget {
 }
 
 class _LogInPageState extends State<LogInPage> {
+  UserModel user = UserModel()..getUserInformation();
   @override
   Widget build(BuildContext context) {
-    final mailController = TextEditingController();
+    final mailController = TextEditingController(
+      text: user.email,
+    );
     final passwordController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
 
@@ -78,11 +82,11 @@ class _LogInPageState extends State<LogInPage> {
                           try {
                             await model.logIn();
                             print('成功！！！');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => TopPage()),
-                            );
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TopPage()),
+                                (_) => false);
                           } catch (e) {
                             print('error');
                             showDialog(

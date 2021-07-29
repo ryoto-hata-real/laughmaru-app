@@ -11,10 +11,14 @@ class SignUpModel extends ChangeNotifier {
   String tel = '';
 
   Future signUp() async {
+    String uid;
+    final FirebaseAuth auth = FirebaseAuth.instance;
     UserCredential userCredential = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: mail, password: password);
+
     FirebaseFirestore.instance.collection('users').add(
       {
+        "uid": auth.currentUser!.uid,
         'name': name,
         'address': address,
         'email': mail,
