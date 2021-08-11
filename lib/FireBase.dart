@@ -13,15 +13,15 @@ class FireBase extends StatelessWidget {
       future: buildProducts(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         List<QueryDocumentSnapshot> datas = snapshot.data!.docs;
-        List<String> products_list =
+        List<String> productsList =
             List.generate(datas.length, (index) => datas[index].get('name'));
         if (snapshot.hasData) {
           return ListView.builder(
-            itemCount: products_list.length, //並べたい要素の数を指定する
+            itemCount: productsList.length, //並べたい要素の数を指定する
             itemBuilder: (context, int index) {
               // index はこの ListView における要素の番号
               return Text(
-                products_list[index], // listItem の index 番目の要素を表示する
+                productsList[index], // listItem の index 番目の要素を表示する
               );
             },
           );

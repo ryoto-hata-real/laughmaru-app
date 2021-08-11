@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:laughmaru/FireBase.dart';
 import 'package:laughmaru/models/ProductListModel.dart';
-import 'package:laughmaru/models/ProductModel.dart';
 import 'package:provider/provider.dart';
 
 import '../OrderForm.dart';
@@ -51,12 +48,13 @@ class _ProductWidgetState extends State<ProductWidget> {
                         Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: Container(
-                            height: 200,
+                            height: 180,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5.0),
                                 image: DecorationImage(
                                     fit: BoxFit.fitHeight,
-                                    image: AssetImage("images/yasai_set.jpg"))),
+                                    image: NetworkImage(
+                                        products[index].imageUrl))),
                           ),
                         ),
                         Container(
@@ -66,10 +64,14 @@ class _ProductWidgetState extends State<ProductWidget> {
                             children: [
                               Text(
                                 products[index].productName,
-                                style: Theme.of(context).textTheme.headline5,
+                                style: Theme.of(context).textTheme.headline6,
                               ),
                               Text(
                                 products[index].productInfo,
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Colors.black54,
+                                ),
                               ),
                               SizedBox(height: 10.0),
                               Text(

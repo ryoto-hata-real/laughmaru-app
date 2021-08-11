@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:laughmaru/models/userModel.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +19,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
               SizedBox(height: 20),
               Text(
                 'ようこそ ' + model.name + ' さん',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ],
           ),

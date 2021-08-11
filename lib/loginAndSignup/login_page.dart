@@ -1,16 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:laughmaru/TopPage.dart';
-import 'package:laughmaru/loginAndSignup/signupModel.dart';
 import 'package:laughmaru/loginAndSignup/signup_page.dart';
-import 'package:laughmaru/models/ProductListModel.dart';
 import 'package:laughmaru/models/userModel.dart';
-import 'package:laughmaru/widgets/AppBarWidget.dart';
-import 'package:laughmaru/widgets/ProductWidget.dart';
 import 'package:provider/provider.dart';
 
-import '../FireBase.dart';
-import '../main.dart';
 import 'loginModel.dart';
 
 class LogInPage extends StatefulWidget {
@@ -73,37 +66,37 @@ class _LogInPageState extends State<LogInPage> {
                           primary: Colors.black54,
                         ),
                         onPressed: () async {
-                          _formKey.currentState!.validate()
-                              ? ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('login')))
-                              : ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('failed')));
-
-                          try {
-                            await model.logIn();
-                            print('成功！！！');
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => TopPage()),
-                                (_) => false);
-                          } catch (e) {
-                            print('error');
-                            showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('ログイン失敗'),
-                                    content: Text('メールアドレスかパスワードが違います。'),
-                                    actions: <Widget>[
-                                      ElevatedButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: Text('OK'),
-                                      ),
-                                    ],
-                                  );
-                                });
+                          if (!_formKey.currentState!.validate()) {
+                            return;
+                          } else {
+                            _formKey.currentState!.save();
+                            try {
+                              await model.logIn();
+                              print('成功！！！');
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => TopPage()),
+                                  (_) => false);
+                            } catch (e) {
+                              print('error');
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('ログイン失敗'),
+                                      content: Text('メールアドレスかパスワードが違います。'),
+                                      actions: <Widget>[
+                                        ElevatedButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            }
                           }
                         }),
                   ],

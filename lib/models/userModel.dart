@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserModel extends ChangeNotifier {
+  String _user = '';
   String name = '';
   String postal = '';
   String address = '';
@@ -26,6 +27,7 @@ class UserModel extends ChangeNotifier {
       this.email = doc['email'];
       this.tel = doc['tel'];
     });
+    _user = uid;
 
     notifyListeners();
   }

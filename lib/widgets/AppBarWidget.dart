@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../main.dart';
+
 class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
-  AppBarWidget(this.title);
+  AppBarWidget(this.title, this.iconFlag);
 
   final String title;
+  final bool iconFlag;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -11,12 +15,11 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // leading: Icon(
-      //   Icons.menu,
-      //   color: Colors.black30,
-      // ),
-      elevation: 0,
+      elevation: 3,
       centerTitle: true,
+      iconTheme: IconThemeData(
+        color: iconFlag ? Colors.black12 : Colors.white,
+      ),
       title: Text(
         title,
         style: TextStyle(
@@ -26,16 +29,24 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
         ),
         textAlign: TextAlign.center,
       ),
-      // actions: <Widget>[
-      //   IconButton(
-      //     icon: Icon(
-      //       Icons.shopping_cart,
-      //       color: Colors.black38,
-      //     ),
-      //     onPressed: () => {},
-      //   ),
-      // ],
-      backgroundColor: Colors.black12,
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.logout),
+          onPressed: () async {
+            // ログアウト処理
+            // 内部で保持しているログイン情報等が初期化される
+            // （現時点ではログアウト時はこの処理を呼び出せばOKと、思うぐらいで大丈夫です）
+            await FirebaseAuth.instance.signOut();
+            // ログイン画面に遷移＋チャット画面を破棄
+            await Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) {
+                return Home();
+              }),
+            );
+          },
+        ),
+      ],
+      backgroundColor: Colors.white,
     );
   }
 }

@@ -10,7 +10,7 @@ class ProductListModel extends ChangeNotifier {
         await FirebaseFirestore.instance.collection('products').get();
     final products = collection.docs
         .map((doc) => ProductModel(
-            doc.toString(), doc['name'], doc['info'], doc['price']))
+            doc.toString(), doc['name'], doc['info'], doc['price'], doc['url']))
         .toList();
     this.products = products;
     notifyListeners();

@@ -5,10 +5,9 @@ import 'package:laughmaru/widgets/ProductWidget.dart';
 class PurchaseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBarWidget('商品一覧'),
+      appBar: AppBarWidget('商品一覧', true),
       body: ProductWidget(),
     );
   }

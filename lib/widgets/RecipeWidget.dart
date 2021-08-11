@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:laughmaru/loginAndSignup/login_page.dart';
-import 'package:laughmaru/loginAndSignup/signup_page.dart';
 
 class RecipeWidget extends StatelessWidget {
   @override

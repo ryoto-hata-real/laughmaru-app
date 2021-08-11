@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:laughmaru/models/ProductModel.dart';
 
 class SignUpModel extends ChangeNotifier {
   String name = '';
@@ -11,7 +10,6 @@ class SignUpModel extends ChangeNotifier {
   String tel = '';
 
   Future signUp() async {
-    String uid;
     final FirebaseAuth auth = FirebaseAuth.instance;
     UserCredential userCredential = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: mail, password: password);
