@@ -61,10 +61,10 @@ class _LogInPageState extends State<LogInPage> {
                     ElevatedButton(
                         child: Text('ログインする'),
                         style: ElevatedButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 20),
-                          fixedSize: Size(150.0, 50.0),
-                          primary: Colors.black54,
-                        ),
+                            textStyle: const TextStyle(fontSize: 16),
+                            fixedSize: Size(150.0, 50.0),
+                            primary: Color.fromARGB(255, 137, 27, 39)
+                                .withOpacity(0.5)),
                         onPressed: () async {
                           if (!_formKey.currentState!.validate()) {
                             return;
@@ -102,33 +102,23 @@ class _LogInPageState extends State<LogInPage> {
                   ],
                 )),
             SizedBox(height: 50.0),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  textStyle: const TextStyle(fontSize: 20),
-                  fixedSize: Size(250.0, 50.0),
-                  primary: Color.fromARGB(255, 160, 77, 77),
+            TextButton(
+              child: const Text('会員登録はこちら'),
+              style: TextButton.styleFrom(
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  decoration: TextDecoration.underline,
                 ),
-                onPressed: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignUpPage()),
-                      )
-                    },
-                child: Text('会員登録はこちら')),
+                primary: Colors.blue[700],
+              ),
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUpPage()),
+                )
+              },
+            ),
             SizedBox(height: 50.0),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  textStyle: const TextStyle(fontSize: 20),
-                  fixedSize: Size(250.0, 50.0),
-                  primary: Color.fromARGB(255, 160, 77, 77),
-                ),
-                onPressed: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => TopPage()),
-                      )
-                    },
-                child: Text('top'))
           ]),
         );
       }),

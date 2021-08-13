@@ -32,17 +32,53 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.logout),
-          onPressed: () async {
-            // ログアウト処理
-            // 内部で保持しているログイン情報等が初期化される
-            // （現時点ではログアウト時はこの処理を呼び出せばOKと、思うぐらいで大丈夫です）
-            await FirebaseAuth.instance.signOut();
-            // ログイン画面に遷移＋チャット画面を破棄
-            await Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) {
-                return Home();
-              }),
-            );
+          onPressed: () {
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Text('本当にログアウトしますか？'),
+                    actions: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              textStyle: const TextStyle(fontSize: 20),
+                              primary: Color.fromARGB(255, 160, 77, 77)
+                                  .withOpacity(0.5),
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('キャンセル'),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              textStyle: const TextStyle(fontSize: 20),
+                              primary: Color.fromARGB(255, 160, 77, 77),
+                            ),
+                            onPressed: () async {
+                              await FirebaseAuth.instance.signOut();
+                              await Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) {
+                                  return Home();
+                                }),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('ログアウトする'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                });
           },
         ),
       ],

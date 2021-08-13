@@ -3,6 +3,7 @@ import 'package:laughmaru/loginAndSignup/signupModel.dart';
 import 'package:laughmaru/widgets/AppBarWidget.dart';
 import 'package:provider/provider.dart';
 import '../TopPage.dart';
+import '../main.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -207,6 +208,20 @@ class _SignUpPageState extends State<SignUpPage> {
                         },
                       ),
                       SizedBox(height: 100),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 20),
+                            fixedSize: Size(250.0, 50.0),
+                            primary: Color.fromARGB(255, 160, 77, 77),
+                          ),
+                          onPressed: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Home()),
+                                )
+                              },
+                          child: Text('ログインページへ')),
                     ],
                   ),
                 ),

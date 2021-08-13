@@ -144,7 +144,7 @@ class _OrderFormState extends State<OrderForm> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBarWidget("ご注文確認", false),
+        appBar: AppBarWidget("ご注文確認", true),
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Form(

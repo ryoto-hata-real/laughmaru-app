@@ -48,10 +48,10 @@ class OrderedPage extends StatelessWidget {
                     primary: Color.fromARGB(255, 160, 77, 77),
                   ),
                   onPressed: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => TopPage()),
-                        )
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => TopPage()),
+                            (_) => false)
                       },
                   child: Text('トップページに戻る'))
             ],
