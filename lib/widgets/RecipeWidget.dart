@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laughmaru/loginAndSignup/login_page.dart';
 
 class RecipeWidget extends StatelessWidget {
   @override
@@ -66,7 +67,12 @@ class RecipeWidget extends StatelessWidget {
                   fixedSize: Size(200.0, 80.0),
                   primary: Color.fromARGB(255, 160, 77, 77),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LogInPage()),
+                  );
+                },
                 child: const Text('レシピ一覧へ',
                     style: TextStyle(
                       fontSize: 20,

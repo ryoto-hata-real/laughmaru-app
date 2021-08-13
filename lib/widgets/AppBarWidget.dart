@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AppBarWidget extends StatelessWidget with PreferredSizeWidget{
-  AppBarWidget(this.title);
+import '../main.dart';
+
+class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
+  AppBarWidget(this.title, this.iconFlag);
 
   final String title;
+  final bool iconFlag;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -11,34 +15,74 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // leading: Icon(
-      //   Icons.menu,
-      //   color: Colors.black30,
-      // ),
-      elevation: 0,
+      elevation: 3,
       centerTitle: true,
-      title: SizedBox(
-        width: 1000,
-        child: Text(
-          title,
-          style: TextStyle(
-            color: Color.fromARGB(255, 160, 77, 77),
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-          textAlign: TextAlign.center,
+      iconTheme: IconThemeData(
+        color: iconFlag ? Colors.black12 : Colors.white,
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+          color: Color.fromARGB(255, 160, 77, 77),
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
         ),
+        textAlign: TextAlign.center,
       ),
       actions: <Widget>[
         IconButton(
-          icon: Icon(
-            Icons.shopping_cart,
-            color: Colors.black38,
-          ),
-          onPressed: () => {},
+          icon: Icon(Icons.logout),
+          onPressed: () {
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Text('本当にログアウトしますか？'),
+                    actions: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              textStyle: const TextStyle(fontSize: 20),
+                              primary: Color.fromARGB(255, 160, 77, 77)
+                                  .withOpacity(0.5),
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('キャンセル'),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              textStyle: const TextStyle(fontSize: 20),
+                              primary: Color.fromARGB(255, 160, 77, 77),
+                            ),
+                            onPressed: () async {
+                              await FirebaseAuth.instance.signOut();
+                              await Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) {
+                                  return Home();
+                                }),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('ログアウトする'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                });
+          },
         ),
       ],
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Colors.white,
     );
   }
 }

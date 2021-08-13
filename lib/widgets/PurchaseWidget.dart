@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../PurchaseScreen.dart';
 
 class PurchaseButton extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,17 +44,17 @@ class PurchaseButton extends StatelessWidget {
                 children: [
                   Text("JGAP認証、無農薬有機栽培で",
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 15,
                         color: Colors.black54,
                       )),
                   Text("育てられた超新鮮な野菜です。",
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 15,
                         color: Colors.black54,
                       )),
                   Text("当日の朝収穫したものをご自宅までお届けします。",
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 15,
                         color: Colors.black54,
                       )),
                 ],
